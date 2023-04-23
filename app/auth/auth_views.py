@@ -1,4 +1,4 @@
-from app.models import User
+# from app.models import User
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
@@ -8,7 +8,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 from app.auth.auth_serializers import AuthloginSerializer, AuthSignupSerializer
 
-class AuthLogin(ModelViewSet, TokenRefreshView):
+
+class AuthLogin(ModelViewSet, TokenObtainPairView):
     serializer_class = AuthloginSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']
@@ -22,7 +23,8 @@ class AuthLogin(ModelViewSet, TokenRefreshView):
             raise InvalidToken(e.args[0])
         return Response(serializer.validated_data, status=HTTP_200_OK)
 
-class Authsignup(ModelViewSet):
+
+class Authsignup(ModelViewSet, TokenObtainPairView):
     serializer_class = AuthSignupSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']
@@ -53,8 +55,3 @@ class Authrefresh(ViewSet, TokenRefreshView):
         except TokenError as e:
             raise InvalidToken(e.args[0])
         return Response(serializer.validated_data, status=HTTP_200_OK)
-
-
-
-import importlib
-importlib.util.find_spec()

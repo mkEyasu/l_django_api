@@ -8,7 +8,7 @@ from django.contrib.auth.models import update_last_login
 
 
 class AuthloginSerializer(TokenObtainPairSerializer):
-    
+
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
@@ -21,9 +21,11 @@ class AuthloginSerializer(TokenObtainPairSerializer):
             update_last_login(None, self.user)
         return data
 
+
 class AuthSignupSerializer(UserSerializer):
     email = serializers.EmailField(required=True, max_length=128, write_only=True)
     password = serializers.CharField(max_length=80, write_only=True, required=True, min_length=8)
+
     class Meta:
         model = User
         fields = ['id', 'email', 'password']

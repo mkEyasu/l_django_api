@@ -1,6 +1,7 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
 from app.models import User
 
+
 class UserSerializer(HyperlinkedModelSerializer):
 
     class Meta:

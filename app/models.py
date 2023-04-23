@@ -8,21 +8,21 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         if email is None:
             raise Exception("User must have an email")
-        
+
         user = self.model(email=self.normalize_email(email), *kwargs)
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email, password=None, **kwargs):
         if email is None:
             raise Exception("User must have an email")
-        
+
         user = self.create_user(email, password, **kwargs)
         user.is_admin = True
         user.save(using=self._db)
         return user
-    
+
 
 class User(AbstractBaseUser):
     objects = UserManager()
@@ -45,13 +45,13 @@ class User(AbstractBaseUser):
 
     def __str__(self) -> str:
         return self.email
-    
+
     def has_perm(self, perm, obj=None):
         return True
-    
+
     def has_module_perms(self, app_label):
         return True
-    
+
     @property
     def is_staff(self):
         return bool(self.is_admin)

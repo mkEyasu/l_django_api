@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+# from django.urls import path, re_path
 from rest_framework.routers import SimpleRouter
 from app.views import UserViewset
 from app.auth.auth_views import AuthLogin, Authsignup, Authrefresh
